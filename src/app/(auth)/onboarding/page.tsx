@@ -10,7 +10,6 @@ const Onboarding = async () => {
     username: "somename",
     name: "somename",
     bio: "somebio",
-    image: "someimage",
   };
 
   const userData = {
@@ -19,7 +18,8 @@ const Onboarding = async () => {
     username: userInfo?.username || user?.username,
     name: (userInfo?.name || user?.firstName) ?? "",
     bio: userInfo?.bio || "",
-    image: userInfo?.image || user?.imageUrl,
+    // image: userInfo?.image || user?.imageUrl,
+    image: user?.imageUrl,
   };
 
   return (
