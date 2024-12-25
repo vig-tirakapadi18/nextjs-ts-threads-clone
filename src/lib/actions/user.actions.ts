@@ -1,4 +1,4 @@
-"user server";
+"use server";
 
 import { IUser } from "@/types";
 import { connectToDB } from "../connectToDB";
@@ -8,12 +8,18 @@ import { revalidatePath } from "next/cache";
 export const updateUser = async (userData: Partial<IUser>): Promise<void> => {
   connectToDB();
 
-  const { id, name, username, bio, image, path } = userData;
+  const { userId, name, username, bio, image, path } = userData;
 
   try {
-    await User.findByIdAndUpdate(
-      { id },
-      { username: username?.toLowerCase(), name, bio, image, onboarded: true },
+    await User.findOneAndUpdate(
+      { id: userId },
+      {
+        username: username?.toLowerCase(),
+        name,
+        bio,
+        image,
+        onboarded: true,
+      },
       { upsert: true }
     );
 

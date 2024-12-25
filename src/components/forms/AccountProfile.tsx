@@ -13,6 +13,8 @@ import { RiImageCircleAiFill } from "react-icons/ri";
 import { Textarea } from "../ui/textarea";
 import { isBase64Image } from "@/lib/utils";
 import { useUploadThing } from "@/lib/uploadthing";
+import { updateUser } from "@/lib/actions/user.actions";
+import { usePathname, useRouter } from "next/navigation";
 
 export interface IUser {
   id: string;
@@ -32,6 +34,9 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const { startUpload } = useUploadThing("media");
 
+  const pathname = usePathname();
+  const router = useRouter();
+
   const form = useForm({
     resolver: zodResolver(UserValidation),
     defaultValues: {
@@ -41,6 +46,44 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
       bio: user?.bio,
     },
   });
+
+  const submitHandler = async (values: z.infer<typeof UserValidation>) => {
+    const blob = values.profilePhoto;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files);
+
+      if (imgRes?.[0].url) {
+        values.profilePhoto = imgRes[0].url;
+      }
+    }
+
+    console.log({
+      name: values.name,
+      username: values.username,
+      bio: values.bio,
+      path: pathname,
+      userId: user?.id,
+      image: values.profilePhoto,
+    });
+
+    await updateUser({
+      name: values.name,
+      username: values.username,
+      bio: values.bio,
+      path: pathname,
+      userId: user?.id,
+      image: values.profilePhoto,
+    });
+
+    if (pathname === "/profile/edit") {
+      router.back();
+    } else {
+      router.push("/");
+    }
+  };
 
   const imageUploadHandler = (
     event: ChangeEvent<HTMLInputElement>,
@@ -64,22 +107,6 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
 
       fileReader.readAsDataURL(file);
     }
-  };
-
-  const submitHandler = async (values: z.infer<typeof UserValidation>) => {
-    const blob = values.profilePhoto;
-
-    const hasImageChanged = isBase64Image(blob);
-
-    if (hasImageChanged) {
-      const imgRes = await startUpload(files);
-
-      if (imgRes?.[0].url) {
-        values.profilePhoto = imgRes[0].url;
-      }
-    }
-
-    // TODO: UPDATE YOUR PROFILE
   };
 
   return (
