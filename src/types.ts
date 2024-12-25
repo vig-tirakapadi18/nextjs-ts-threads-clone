@@ -12,3 +12,33 @@ export interface IUser {
   communities: ObjectId[];
   path?: string;
 }
+
+// ThreadCard Component
+export interface IAuthor {
+  name: string;
+  image: string;
+  id: string;
+}
+
+export interface ICommunity {
+  name: string;
+  id: string;
+  image: string;
+}
+
+export interface IComment {
+  author: { image: string };
+}
+
+export interface IThreadCardProps {
+  id: string;
+  currentUserId: string;
+  parentId: string | null;
+  content: string;
+  author: IAuthor;
+  community: ICommunity | null;
+  createdAt: string;
+  comments: IComment[];
+  isComment?: boolean;
+}
+

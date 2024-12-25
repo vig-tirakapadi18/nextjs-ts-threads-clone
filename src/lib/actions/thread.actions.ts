@@ -32,3 +32,33 @@ export const createThread = async ({
     throw new Error(`Failed to create thread: ${error.message}!`);
   }
 };
+
+export const fetchPosts = async (pageNum = 1, pageSize = 20) => {
+  connectToDB();
+
+  const skip = (pageNum - 1) * pageSize;
+
+  // Top level threads - posts that have no children
+  const postsQuery = Thread.find({ parentId: { $in: [null, undefined] } })
+    .sort({ createdAt: "desc" })
+    .limit(pageSize)
+    .populate({ path: "author", model: User })
+    .populate({
+      path: "children",
+      populate: {
+        path: "author",
+        model: User,
+        select: "_id name parentId image",
+      },
+    });
+
+  const totalPostCount = await Thread.countDocuments({
+    parentId: { $in: [null, undefined] },
+  });
+
+  const posts = await postsQuery.exec();
+
+  const isNext = totalPostCount > skip + posts.length;
+
+  return { posts, isNext };
+};
