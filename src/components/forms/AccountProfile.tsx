@@ -74,7 +74,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
     if (hasImageChanged) {
       const imgRes = await startUpload(files);
 
-      if (imgRes && imgRes[0].url) {
+      if (imgRes?.[0].url) {
         values.profilePhoto = imgRes[0].url;
       }
     }
