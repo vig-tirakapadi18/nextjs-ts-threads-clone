@@ -1,7 +1,14 @@
 "use client";
 
 import React, { ChangeEvent, useState } from "react";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UserValidation } from "@/lib/validations/user";
@@ -16,7 +23,7 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 
-export interface IUser {
+export interface IAccountUser {
   id: string;
   objectId: string;
   username: string;
@@ -26,7 +33,7 @@ export interface IUser {
 }
 
 interface IAccountProfileProps {
-  user: IUser;
+  user: IAccountUser;
   btnTitle: string;
 }
 
@@ -145,6 +152,8 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
                   className="bg-dark-3 text-white border-gray-700 border-[1px]"
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -165,6 +174,8 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
                   {...field}
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -205,6 +216,8 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
                   {...field}
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
