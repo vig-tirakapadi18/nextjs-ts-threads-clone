@@ -1,4 +1,6 @@
-import AccountProfile, { IUser } from "@/components/forms/AccountProfile";
+import AccountProfile, {
+  IAccountUser,
+} from "@/components/forms/AccountProfile";
 import { currentUser } from "@clerk/nextjs";
 import React from "react";
 
@@ -30,7 +32,7 @@ const Onboarding = async () => {
       </p>
 
       <section className="mt-9 bg-dark-2 p-10">
-        <AccountProfile user={userData as IUser} btnTitle="Continue" />
+        <AccountProfile user={userData as IAccountUser} btnTitle="Continue" />
       </section>
     </main>
   );
