@@ -11,6 +11,8 @@ import * as z from "zod";
 import Image from "next/image";
 import { RiImageCircleAiFill } from "react-icons/ri";
 import { Textarea } from "../ui/textarea";
+import { isBase64Image } from "@/lib/utils";
+import { useUploadThing } from "@/lib/uploadthing";
 
 export interface IUser {
   id: string;
@@ -28,6 +30,7 @@ interface IAccountProfileProps {
 
 const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
   const [files, setFiles] = useState<File[]>([]);
+  const { startUpload } = useUploadThing("media");
 
   const form = useForm({
     resolver: zodResolver(UserValidation),
@@ -63,8 +66,20 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
     }
   };
 
-  const submitHandler = (values: z.infer<typeof UserValidation>) => {
-    console.log(values);
+  const submitHandler = async (values: z.infer<typeof UserValidation>) => {
+    const blob = values.profilePhoto;
+
+    const hasImageChanged = isBase64Image(blob);
+
+    if (hasImageChanged) {
+      const imgRes = await startUpload(files);
+
+      if (imgRes && imgRes[0].url) {
+        values.profilePhoto = imgRes[0].url;
+      }
+    }
+
+    // TODO: UPDATE YOUR PROFILE
   };
 
   return (
