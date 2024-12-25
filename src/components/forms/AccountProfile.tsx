@@ -225,7 +225,7 @@ const AccountProfile = ({ user, btnTitle }: IAccountProfileProps) => {
           type="submit"
           className="bg-primary-500 hover:bg-primary-500 hover:opacity-95"
         >
-          Submit
+          {btnTitle}
         </Button>
       </form>
     </Form>

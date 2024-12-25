@@ -16,6 +16,7 @@ import {
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import { createThread } from "@/lib/actions/thread.actions";
 
 interface IPostThreadProps {
   userId: string;
@@ -33,7 +34,16 @@ const PostThread = ({ userId }: IPostThreadProps) => {
     },
   });
 
-  const submitHandler = () => {};
+  const submitHandler =async (values: z.infer<typeof ThreadValidation>) => {
+    await createThread({
+      text: values.thread,
+      author: userId,
+      communityId: null,
+      path: pathname,
+    });
+    
+    router.push("/");
+  };
 
   return (
     <Form {...form}>
