@@ -12,6 +12,13 @@ interface IThreadParams {
   path: string;
 }
 
+interface ICommentParams {
+  threadId: string;
+  comment: string;
+  userId: string;
+  path: string;
+}
+
 export const createThread = async ({
   text,
   author,
@@ -93,5 +100,30 @@ export const fetchThreadById = async (id: string) => {
     return thread;
   } catch (error: any) {
     throw new Error(`Error fetching thread by id: ${error.message}`);
+  }
+};
+
+export const addCommentToThread = async (commentData: ICommentParams) => {
+  connectToDB();
+
+  try {
+    const thread = await Thread.findById(commentData.threadId);
+
+    if (thread) throw new Error("Thread not found!");
+
+    const commentThread = new Thread({
+      text: commentData.comment,
+      author: commentData.userId,
+      parentId: commentData.threadId,
+    });
+
+    const savedCommentThread = await commentThread.save();
+
+    thread.children.push(savedCommentThread);
+
+    await thread.save();
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      throw new Error(`Error adding comment to the thread: ${error.message}`);
   }
 };
