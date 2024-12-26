@@ -3,8 +3,9 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import React from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
+import ThreadsTab from "@/components/shared/ThreadsTab";
 
 interface IProfileProps {
   params: { id: string };
@@ -45,6 +46,20 @@ const Profile = async ({ params }: IProfileProps) => {
               </TabsTrigger>
             ))}
           </TabsList>
+
+          {profileTabs.map((tab) => (
+            <TabsContent
+              key={`content-${tab.label}`}
+              value={tab.value}
+              className="w-full text-light-1"
+            >
+              <ThreadsTab
+                currentUserId={user.id}
+                accountId={userInfo.id}
+                accountType={"User"}
+              />
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </section>
