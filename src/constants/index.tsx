@@ -1,11 +1,14 @@
 import {
   FaHeart,
   FaHome,
+  FaReplyAll,
   FaSearch,
+  FaTags,
   FaUser,
   FaUsers,
 } from "react-icons/fa";
 import { IoCreate } from "react-icons/io5";
+import { BsThreads } from "react-icons/bs";
 
 export const sidebarLinks = [
   {
@@ -53,13 +56,49 @@ export const sidebarLinks = [
 ];
 
 export const profileTabs = [
-  { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
-  { value: "replies", label: "Replies", icon: "/assets/members.svg" },
-  { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
+  {
+    value: "threads",
+    label: "Threads",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <FaReplyAll size={size + 4} color={color} />;
+    },
+  },
+  {
+    value: "replies",
+    label: "Replies",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <FaUsers size={size + 4} color={color} />;
+    },
+  },
+  {
+    value: "tagged",
+    label: "Tagged",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <BsThreads size={size + 4} color={color} />;
+    },
+  },
 ];
 
 export const communityTabs = [
-  { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
-  { value: "members", label: "Members", icon: "/assets/members.svg" },
-  { value: "requests", label: "Requests", icon: "/assets/request.svg" },
+  {
+    value: "threads",
+    label: "Threads",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <FaReplyAll size={size + 4} color={color} />;
+    },
+  },
+  {
+    value: "members",
+    label: "Members",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <FaUsers size={size + 4} color={color} />;
+    },
+  },
+  {
+    value: "requests",
+    label: "Requests",
+    icon: (size: number = 26, color: string = "#fff") => {
+      return <FaTags size={size + 4} color={color} />;
+    },
+  },
 ];
