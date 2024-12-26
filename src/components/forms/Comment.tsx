@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Button } from "../ui/button";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CommentValidation } from "@/lib/validations/thread";
@@ -21,7 +22,6 @@ const Comment = ({
   currentUserId,
   currentUserImg,
 }: ICommentProps) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   const form = useForm({
