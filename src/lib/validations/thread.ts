@@ -8,7 +8,7 @@ export const ThreadValidation = z.object({
   accountId: z.string(),
 });
 
-export const CommunityValidation = z.object({
+export const CommentValidation = z.object({
   thread: z
     .string()
     .nonempty()
