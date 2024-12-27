@@ -46,7 +46,7 @@ const ThreadCard = ({
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
-            <div className="mt-5 flex flex-col gap-3">
+            <div className={`${isComment && "mt-10"} mt-5 flex flex-col gap-3`}>
               <div className="flex gap-5">
                 <FaHeart size={24} color="gray" />
                 <Link href={`/thread/${id}`}>
