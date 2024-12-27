@@ -12,7 +12,7 @@ const Activity = async () => {
   const userInfo = await fetchUser(user.id);
   if (!userInfo.onboarded) redirect("/onboarding");
 
-  const activity = await getActivity(userInfo.id);
+  const activity = await getActivity(userInfo._id);
 
   return (
     <section>

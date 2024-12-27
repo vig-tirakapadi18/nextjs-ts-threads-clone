@@ -125,7 +125,7 @@ export const getActivity = async (userId: string) => {
   connectToDB();
 
   try {
-    const userThread = await Thread.findOne({ author: userId });
+    const userThread = await Thread.find({ author: userId });
 
     const childThreadIds = userThread.reduce(
       (acc: string[], userThread: any) => {
