@@ -60,21 +60,21 @@ export const profileTabs = [
     value: "threads",
     label: "Threads",
     icon: (size: number = 26, color: string = "#fff") => {
-      return <FaReplyAll size={size + 4} color={color} />;
+      return <FaReplyAll size={size} color={color} />;
     },
   },
   {
     value: "replies",
     label: "Replies",
     icon: (size: number = 26, color: string = "#fff") => {
-      return <FaUsers size={size + 4} color={color} />;
+      return <FaUsers size={size} color={color} />;
     },
   },
   {
     value: "tagged",
     label: "Tagged",
     icon: (size: number = 26, color: string = "#fff") => {
-      return <BsThreads size={size + 4} color={color} />;
+      return <BsThreads size={size - 2} color={color} />;
     },
   },
 ];

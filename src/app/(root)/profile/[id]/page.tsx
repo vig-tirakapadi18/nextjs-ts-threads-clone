@@ -1,3 +1,5 @@
+"use server";
+
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
@@ -13,7 +15,6 @@ interface IProfileProps {
 
 const Profile = async ({ params }: IProfileProps) => {
   const user = await currentUser();
-
   if (!user) return null;
 
   const userInfo = await fetchUser(params.id);
@@ -38,7 +39,7 @@ const Profile = async ({ params }: IProfileProps) => {
           <TabsList className="tab">
             {profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value="tab.value">
-                {tab.icon()}
+                {tab.icon(16)}
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.label === "Threads" && (
                   <p className="ml-1 rounded-full bg-light-4 px-2 py-1 text-tiny-medium text-light-2"></p>
