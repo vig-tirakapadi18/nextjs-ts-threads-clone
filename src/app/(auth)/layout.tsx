@@ -21,7 +21,11 @@ const RootLayout = ({ children }: IRootLayoutProps) => {
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${poppins.className} bg-dark-1`}>{children}</body>
+        <body className={`${poppins.className} bg-dark-1`}>
+          <div className="flex justify-center items-center w-full min-h-screen">
+            {children}
+          </div>
+        </body>
       </html>
     </ClerkProvider>
   );
