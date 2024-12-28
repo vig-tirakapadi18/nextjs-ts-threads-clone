@@ -38,11 +38,13 @@ const Profile = async ({ params }: IProfileProps) => {
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
             {profileTabs.map((tab) => (
-              <TabsTrigger key={tab.label} value="tab.value">
-                {tab.icon(16)}
+              <TabsTrigger key={tab.label} value="tab.value" className="tab">
+                {tab.icon(18)}
                 <p className="max-sm:hidden">{tab.label}</p>
                 {tab.label === "Threads" && (
-                  <p className="ml-1 rounded-full bg-light-4 px-2 py-1 text-tiny-medium text-light-2"></p>
+                  <p className="ml-1 rounded-full bg-[dodgerblue] px-2 py-1 !text-tiny-medium text-light-2 font-semibold">
+                    {userInfo?.threads?.length}
+                  </p>
                 )}
               </TabsTrigger>
             ))}

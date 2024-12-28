@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { connectToDB } from "../connectToDB";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
+import Community from "../models/community.model";
 
 interface IThreadParams {
   text: string;
@@ -28,11 +29,26 @@ export const createThread = async ({
   connectToDB();
 
   try {
-    const createThread = await Thread.create({ text, author, community: null });
+    const communityIdObj = await Community.findOne(
+      { id: communityId },
+      { _id: 1 }
+    );
+
+    const createThread = await Thread.create({
+      text,
+      author,
+      community: communityIdObj,
+    });
 
     await User.findByIdAndUpdate(author, {
       $push: { threads: createThread._id },
     });
+
+    if (communityIdObj) {
+      await Community.findByIdAndUpdate(communityIdObj, {
+        $push: { threads: createThread._id },
+      });
+    }
 
     revalidatePath(path);
   } catch (error: any) {
