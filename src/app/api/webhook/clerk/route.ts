@@ -8,7 +8,7 @@ import {
   addMemberToCommunity,
   createCommunity,
   deleteCommunity,
-  removeUserFromCommunity,
+  removeMemberFromCommunity,
   updateCommunityInfo,
 } from "@/lib/actions/community.actions";
 
@@ -30,7 +30,7 @@ type Event = {
 
 export const POST = async (request: Request) => {
   const payload = await request.json();
-  const header = headers();
+  const header = await headers();
 
   const heads = {
     "svix-id": header.get("svix-id"),
@@ -42,7 +42,7 @@ export const POST = async (request: Request) => {
   // After adding the endpoint, you'll see the secret on the right side.
   const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET || "");
 
-  let evnt: Event | null = null;
+  let evnt: any = null;
 
   try {
     evnt = wh.verify(
@@ -66,12 +66,7 @@ export const POST = async (request: Request) => {
       // @ts-ignore
       await createCommunity(
         // @ts-ignore
-        id,
-        name,
-        slug,
-        logo_url || image_url,
-        "org bio",
-        created_by
+        { id, name, slug, logo_url, image_url, created_by }
       );
 
       return NextResponse.json({ message: "User created" }, { status: 201 });
@@ -140,7 +135,10 @@ export const POST = async (request: Request) => {
       console.log("removed", evnt?.data);
 
       // @ts-ignore
-      await removeUserFromCommunity(public_user_data.user_id, organization.id);
+      await removeMemberFromCommunity(
+        public_user_data.user_id,
+        organization.id
+      );
 
       return NextResponse.json({ message: "Member removed" }, { status: 201 });
     } catch (err) {
