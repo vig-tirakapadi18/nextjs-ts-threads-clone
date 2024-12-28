@@ -60,7 +60,7 @@ export const profileTabs = [
     value: "threads",
     label: "Threads",
     icon: (size: number = 26, color: string = "#fff") => {
-      return <FaReplyAll size={size} color={color} />;
+      return <FaReplyAll size={size} color={color} className="mr-2" />;
     },
   },
   {
